@@ -29,12 +29,37 @@ we solve the same subproblem repeatedly. => **recursive**
 #### Pure Recursive
 ```java
 /**
-    s : a p p l e p e n a p p l e                   dict : ["apple", "pen", "ap"]
-r1        /    |     \
-    apple/     |pen   \ap
-        /      |       \
-    penapple   ❌      plepenapple
+   ｜--------->✅s : a p p l e p e n a p p l e                   dict : ["apple", "pen", "ap"]
+   ｜              /    |     \
+   ｜        apple/     |pen   \ap
+   ｜            /      |       \
+   ｜-----> ✅penapple   ❌      plepenapple
+   ｜       /    \                /  |  \
+   ｜   pen/      \apple         ❌  ❌  ❌ <= Whichone won't work here
+   ｜     /        \
+   ｜---> ✅apple      ❌
+   ｜    /
+   ｜   / apple
+   ｜  /
+   ✅"" <= index = s.len
 */
+class Solution {
+    Set<String> dict;
+    public boolean wordBreak(String s, List<String> wordDict) {
+        dict = new HashSet<>(wordDict);
+        return dfs(s, 0);
+    }
+
+    private boolean dfs(String s, int i) {
+        if (i == s.length()) return true;
+        for (int j = i + 1; j <= s.length(); j++) {
+            if (dict.contains(s.substring(i, j)) && dfs(s, j)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
 ```
 ---
 ## Approach 2: Bottom-up DP
