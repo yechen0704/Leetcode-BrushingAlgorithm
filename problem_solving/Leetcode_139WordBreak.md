@@ -1,1 +1,26 @@
+# Word Break (LeetCode 139)
 
+## Problem Restatement
+Given a string `s` and a dictionary `wordDict`, determine whether `s` can be segmented
+into a sequence of one or more dictionary words.
+
+At each position in the string, we decide **whether to cut**, and if so, **how far**.
+
+---
+
+## Solution Overview
+
+| Approach | Paradigm | Key Idea | Time | Space | Trade-off |
+|--------|----------|----------|------|-------|-----------|
+| Recursive + Memo | Top-down DP | DFS on index with caching | O(n²) | O(n) | Simple & intuitive |
+| DP Table | Bottom-up DP | Build validity from left to right | O(n²) | O(n) | Iterative & stable |
+| Trie-based | DS + Search | Prefix matching with pruning | O(n·L) | O(n + dict) | Faster lookups, more setup |
+
+---
+## Core abstraction
+---
+## Approach 1: Recursive + Memo (Top-down DP)
+---
+## Approach 2: Bottom-up DP
+---
+## Approach 3: Trie-based Search
