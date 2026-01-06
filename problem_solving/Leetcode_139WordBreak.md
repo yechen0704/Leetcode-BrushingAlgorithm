@@ -61,6 +61,12 @@ class Solution {
     }
 }
 ```
+If you have played *The Legand of Zelda*, congratulations - you've just made it out of the beginner village.
+
+But this is still not enough. When you submit the solution, you may find that some test cases exceed the time limit.
+
+
+
 ---
 ## Approach 2: Bottom-up DP
 ---
