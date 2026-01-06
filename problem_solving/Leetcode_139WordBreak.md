@@ -21,6 +21,7 @@ At each position in the string, we decide **whether to cut**, and if so, **how f
 
 At first glance, our intuition is to try matching each word in wordDict against the string s.
 Whenever we find a match, we recursively move to the next position and repeat the process.
+
 we solve the same subproblem repeatedly. => **recursive**
 
 ---
