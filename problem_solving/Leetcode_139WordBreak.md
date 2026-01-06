@@ -26,6 +26,16 @@ we solve the same subproblem repeatedly. => **recursive**
 
 ---
 ## Approach 1: Recursive + Memo (Top-down DP)
+#### Pure Recursive
+```java
+/**
+    s : a p p l e p e n a p p l e                   dict : ["apple", "pen", "ap"]
+r1        /    |     \
+    apple/     |pen   \ap
+        /      |       \
+    penapple   ❌      plepenapple
+*/
+```
 ---
 ## Approach 2: Bottom-up DP
 ---
