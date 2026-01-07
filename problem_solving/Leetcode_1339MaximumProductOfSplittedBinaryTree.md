@@ -58,14 +58,23 @@ class Solution {
 }
 ```
 **Time Complexity:**
+
 countSum - O(n)
+
 dfs - O(n) dfs visit each node one time, other operation are all O(1)
+
 Total TC : O(n)
+
 **Space Complexity:**
+
 variable are O(1) SC
+
 countSum - O(h) stack space
+
 - IF balance tree O(h) = O(logn)
+  
 dfs - O(h) stack space
+
 Total SC : O(h)
 
 ---
