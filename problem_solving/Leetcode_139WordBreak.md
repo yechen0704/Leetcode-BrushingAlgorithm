@@ -99,7 +99,7 @@ class Solution {
 
         for (int i = index + 1; i <= s.length(); i++) {
             if (set.contains(s.substring(index, i)) && dfs(s, i)) {
-                return memo[i] = true; // ----i---index----  i prev has been check, i to index check by set, back of i call dfs check
+                return memo[index] = true; // ----i---index----  i prev has been check, i to index check by set, back of i call dfs check
             }
         }
         return memo[index] = false;
@@ -153,5 +153,21 @@ class Solution {
     }
 }
 ```
+Recursive + memo
+**TC** : O(n)cur level loop + O(n)recursive inner layer loop = O(n^2)
+**SC** : O(n) memo + O(n) stack memory = O(n)
+
+DP
+**TC**: O(n^2) 2 layer loop
+**SC**: O(n) dp
+
+Ignore substring copy and set dict space
+
+Even if they both have O(n^2) time complexity and O(n) space complexity, but actually when we run this two algorithm on leetcode, the recursive performance more well
+Why❓
+Although both approaches have the same asymptotic complexity,
+top-down DP often runs faster in practice because it evaluates only reachable states and can terminate early,
+while bottom-up DP enumerates all states regardless of necessity.
+
 ---
 ## Approach 3: Trie-based Search
