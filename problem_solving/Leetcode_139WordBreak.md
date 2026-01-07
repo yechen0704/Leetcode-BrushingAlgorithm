@@ -285,4 +285,5 @@ class Solution {
 }
 ```
 TC : O(words.length * maxLen)buidTrie + O(n^2) 2 for loop
+
 SC : O(word.length * maxLen)buildTrie + O(n) dp array
