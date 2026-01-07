@@ -70,6 +70,7 @@ Total SC : O(h)
 
 ---
 ## Dry Run
+```
     1
    / \
   2  3
