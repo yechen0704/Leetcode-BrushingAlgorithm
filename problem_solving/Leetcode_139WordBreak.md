@@ -65,7 +65,47 @@ If you have played *The Legand of Zelda*, congratulations - you've just made it 
 
 But this is still not enough. When you submit the solution, you may find that some test cases exceed the time limit.
 
+```java
 
+/**
+   Let's deep dive into this test case
+
+                  a a a a a a a a b                           dict : ["a", "aa", "aaa"]
+                     /       |     \
+                   a/      aa|      \aaa
+                  /          |       \
+             aaaaaaab     &aaaaaab    $aaaaab
+             /  |  \
+           a/ aa|    \aaa                                    & - 7 a's
+           /    |     \                                      $ - 6 a's
+    &aaaaaab  $aaaaab   aaaab  
+
+   In this case, different branch have same subtree, it's duplicate
+   so we can use memorization to cut edge
+*/
+
+class Solution {
+    HashSet<String> set;
+    Boolean[] memo; 
+    public boolean wordBreak(String s, List<String> wordDict) {
+        memo = new Boolean[s.length() + 1];
+        set = new HashSet<>(wordDict);
+        return dfs(s, 0);
+    }
+
+    private boolean dfs(String s, int index){
+        if (index == s.length()) return memo[s.length()] = true;
+        if (memo[index] != null) return memo[index];
+
+        for (int i = index + 1; i <= s.length(); i++) {
+            if (set.contains(s.substring(index, i)) && dfs(s, i)) {
+                return memo[i] = true; // ----i---index----  i prev has been check, i to index check by set, back of i call dfs check
+            }
+        }
+        return memo[index] = false;
+    }
+}
+```
 
 ---
 ## Approach 2: Bottom-up DP
