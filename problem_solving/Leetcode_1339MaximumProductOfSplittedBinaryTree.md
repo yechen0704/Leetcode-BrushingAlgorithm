@@ -76,7 +76,7 @@ Total SC : O(h)
   2  3
 / \  /
 4  5 6
-```  
+
 countSum
 countSum(1)
   countSum(2)
