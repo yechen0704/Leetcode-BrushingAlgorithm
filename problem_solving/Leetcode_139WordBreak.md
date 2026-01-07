@@ -106,6 +106,41 @@ class Solution {
     }
 }
 ```
+This thinking also can be optimized
+
+we can use index + word.len to avoid for loop unnecessary index
+
+```java
+class Solution {
+    List<String> words;
+    Boolean[] memo;
+    String s;
+
+    public boolean wordBreak(String s, List<String> wordDict) {
+        this.s = s;
+        this.words = wordDict;
+        memo = new Boolean[s.length() + 1];
+        return dfs(0);
+    }
+
+    private boolean dfs(int index) {
+        if (index == s.length()) return true;
+        if (memo[index] != null) return memo[index];
+
+        for (String w : words) {
+            int len = w.length();
+            if (index + len <= s.length() &&
+                s.startsWith(w, index) &&
+                dfs(index + len)) {
+                return memo[index] = true;
+            }
+        }
+        return memo[index] = false;
+    }
+}
+
+
+```
 
 ---
 ## Approach 2: Bottom-up DP
@@ -161,13 +196,93 @@ DP
 **TC**: O(n^2) 2 layer loop
 **SC**: O(n) dp
 
-Ignore substring copy and set dict space
+Ignoring the cost of substring copying and the space used by the dictionary, both algorithms have O(n²) time complexity and O(n) space complexity.
 
-Even if they both have O(n^2) time complexity and O(n) space complexity, but actually when we run this two algorithm on leetcode, the recursive performance more well
+However, when running these two approaches on LeetCode, the recursive (top-down DP) solution performs better in practice.
+
 Why❓
 Although both approaches have the same asymptotic complexity,
 top-down DP often runs faster in practice because it evaluates only reachable states and can terminate early,
 while bottom-up DP enumerates all states regardless of necessity.
 
 ---
-## Approach 3: Trie-based Search
+## Approach 3: Trie-based search + memo
+Even though the previous algorithm is already good enough — a top-down recursion with memoization can easily beat most submissions on LeetCode — we can still ask: where can we optimize further in practice?
+
+The common implementation uses substring + HashSet.
+
+HashSet.contains() is amortized O(1), but only after you already have the key.
+
+The expensive part is creating the substring:
+
+substring(i, j) allocates a new String (in modern Java it usually copies characters),
+
+and computing the hash for that new string typically costs O(length) because it must iterate over the characters.
+
+So each membership check is closer to O(L), where L = j - i + 1, not truly O(1).
+When you do this inside a double loop over (i, j), the real runtime can feel much worse than the “clean” O(n²) analysis.
+
+To optimize this, we can use a Trie.
+
+A Trie avoids substring creation and hashing.
+Instead of generating every possible substring and asking “is it in the set?”, we walk the trie character by character and only follow paths that exist in the dictionary. The moment the next character does not match any trie edge, we stop immediately (early cut).
+
+Example:
+s = "aaab"
+dict = ["aaaa", "aaab"]
+
+Starting from index 0:
+
+We walk a -> a -> a -> b in the trie.
+
+When we reach the 4th character, we can directly know "aaab" is a word (isWord = true).
+
+If the string were "aaac" instead, the trie would fail at the last step (c edge does not exist) and we would stop right away — without creating "aaac" as a substring or hashing it.
+
+```java
+class Solution {
+    static class TrieNode {
+        TrieNode[] next = new TrieNode[26];
+        boolean isWord;
+    }
+
+    public boolean wordBreak(String s, List<String> wordDict) {
+        TrieNode root = buildTrie(wordDict);
+        int n = s.length();
+        boolean[] dp = new boolean[n + 1];
+        dp[n] = true;
+
+        for (int i = n - 1; i >= 0; i--) {
+            TrieNode cur = root;
+            for (int j = i; j < n; j++) {
+                int idx = s.charAt(j) - 'a';
+                if (idx < 0 || idx >= 26 || cur.next[idx] == null) break;
+                cur = cur.next[idx];
+
+                if (cur.isWord && dp[j + 1]) {
+                    dp[i] = true;
+                    break; // early stop
+                }
+            }
+        }
+        return dp[0];
+    }
+
+    private TrieNode buildTrie(List<String> wordDict) {
+        TrieNode r = new TrieNode();
+        for (String w : wordDict) {
+            TrieNode cur = r;
+            for (int k = 0; k < w.length(); k++) {
+                char ch = w.charAt(k);
+                int idx = ch - 'a';
+                if (cur.next[idx] == null) cur.next[idx] = new TrieNode();
+                cur = cur.next[idx];
+            }
+            cur.isWord = true;
+        }
+        return r;
+    }
+}
+```
+TC : O(words.length * maxLen)buidTrie + O(n^2) 2 for loop
+SC : O(word.length * maxLen)buildTrie + O(n) dp array
