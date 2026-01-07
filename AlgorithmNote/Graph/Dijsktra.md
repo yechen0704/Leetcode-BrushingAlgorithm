@@ -6,3 +6,10 @@ Dijkstra algorithm solves the **Single-Source Shortest Path (SSSP)** problem.
 ✅ Directed Graph  
 ✅ Undirected Graph  
 ❗️ Edge weights must be non-negtive  
+
+## Core Idea / Algorithm Paradigm
+**Greedy algorithm + BFS**
+1. select the unvisited node with the smallest known distance from the source.  
+2. Mark this spot has been visited
+3. Update all unvisited spot distance
+
