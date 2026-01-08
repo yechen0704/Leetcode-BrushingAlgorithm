@@ -6,6 +6,7 @@ Dijkstra algorithm solves the **Single-Source Shortest Path (SSSP)** problem.
 ✅ Directed Graph  
 ✅ Undirected Graph  
 ❗️ Edge weights must be non-negtive  
+
 ---
 ## Core Idea / Algorithm Paradigm
 **Greedy algorithm + BFS**
