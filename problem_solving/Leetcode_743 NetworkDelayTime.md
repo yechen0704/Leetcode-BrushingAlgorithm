@@ -15,4 +15,4 @@ The final answer is the maximum of all shortest distances from K.
 Since all edge weights are non-negtive, ```Dijkstra``` algorithm is the natural fit.  
 
 ---
-## Approach ：Dijkstra [Algorithm Note](../../AlgorithmNode/graph/Dijsktra.md)
+## Approach ：Dijkstra [Algorithm Note](../../AlgorithmNode/Graph/Dijsktra.md)
