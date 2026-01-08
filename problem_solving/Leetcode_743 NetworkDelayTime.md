@@ -16,3 +16,20 @@ Since all edge weights are non-negtive, ```Dijkstra``` algorithm is the natural 
 
 ---
 ## Approach ：Dijkstra [Algorithm Note](../AlgorithmNote/Graph/Dijsktra.md)
+1. Build adj list for graph  
+```java
+/**
+  Input : [[2,1,1],[2,3,1],[3,4,1]], n = 4, k =2
+  Build Graph : 
+    Node | <Neighbor, Weight>
+------------------------------
+    2    | <1, 1> <3, 1>
+    3    | <4, 1>
+    Graph : List<int[]>[] 
+*/
+```  
+2. initialize dis[] with infinity, set dist[k] = 0, means k to k start with 0 cost  
+3. Use min-heap to always expand the shortest known node
+4. After Dijkstra finishes:  
+   - If any node is still infinity -> unreachable -> return -1
+   - Otherwise return max(dist[])
