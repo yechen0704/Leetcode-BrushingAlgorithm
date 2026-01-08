@@ -89,3 +89,13 @@ class Solution {
     }
 }
 ```
+**Time Complexity :**
+1. build graph : O(n)
+2. iterate edge : O(m)
+3. Dijkstra : O(mlogn) pq need logn  
+  TOTAL TC = O(mlog)
+
+**Space Complexity :**
+1. Build graph : O(n + m)
+2. Dijkstra : O(m)  
+   TOTAL SC = O(m + n)
