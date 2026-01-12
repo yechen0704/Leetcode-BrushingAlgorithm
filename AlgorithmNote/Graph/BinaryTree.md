@@ -148,7 +148,7 @@ void backtrack(Node root) {
     }
 }
 ```
-
+---
 ## Quick Sort = preorder traversal & Merge Sort = postorder traversal
 ### Quick Sort
 ```java
@@ -168,4 +168,72 @@ mergeSort(arr, lo, hi):
     mergeSort(arr, lo, mid)
     mergeSort(arr, mid+1, hi)
     merge(arr, lo, mid, hi)
+```
+---
+
+## Essence of Algorithm & Recursion
+1. Essence of algorithm: in the end, most algorithm are a form of exhaustive search
+2. Recursion is powerful way to organize that search
+3. The most effective way to understand recursion : think it a as operating on a tree
+### Two mindsets for writing recursive algorithms
+1. Decompose the problem ("problem decomposition" / "Divide and conquer" / "DP style")
+2. Traverse the tree ("traversal" / DFS / backtracking style)
+Almost every recursive solution you see is one of these two
+### Example - Binary Tree Max Depth (Leetcod3e 104)
+#### Decomposition
+```java
+
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+
+class Main {
+    static class TreeNode{
+        int val;
+        TreeNode left;
+        TreeNode right;
+        public TreeNode (int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+    
+    private static int maxDepth(TreeNode root) {
+        if (root == null) return 0;
+        int depth = decomp(root);
+        return depth;
+    }
+    
+    private static int decomp(TreeNode root) {
+        if (root == null) return 0;
+        int leftDecomp = decomp(root.left);
+        int rightDecomp = decomp(root.right);
+        return Math.max(leftDecomp, rightDecomp) + 1;
+    }
+    public static void main(String[] args) {
+        TreeNode root4 = new TreeNode(4, null, null);
+        TreeNode root7 = new TreeNode(7, null, null);
+        TreeNode root6 = new TreeNode(6, null, null);
+        TreeNode root5 = new TreeNode(5, null, root7);
+        TreeNode root2 = new TreeNode(2, root4, null);
+        TreeNode root3 = new TreeNode(3, root5, root6);
+        TreeNode root1 = new TreeNode(1, root2, root3);
+        
+        int depth = maxDepth(root1);
+        System.out.println(depth);
+        
+    }
+}
+```
+#### Traversal
+```java
+static int res = 0;
+private static void traverse(TreeNode root, int depth) {
+        if (root == null) {
+            res = Math.max(depth, res);
+            return;
+        }
+        traverse(root.left, depth + 1);
+        traverse(root.right, depth + 1);
+}
 ```
