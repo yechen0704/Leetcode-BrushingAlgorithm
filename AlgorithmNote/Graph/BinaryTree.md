@@ -237,3 +237,18 @@ private static void traverse(TreeNode root, int depth) {
         traverse(root.right, depth + 1);
 }
 ```
+---
+## Practical checklist for recursion
+1. Tree?
+   - real tree or an implicit "decision tree"
+2. Which mindset?
+   - Do I need to return a value from subproblems? -> decomp
+   - Do I just need a search / enumerate / collect? -> tracersal
+3. If decomposition
+   - clearly define the function: input & output
+   - Use the definition to express subproblems
+   - Combine subproblem results
+4. If traversal:
+   - write a void recursive function
+   - Maintain global / external state (like res, poath, depth)
+   - Decide at which position (pre / in / post / leaf) to update results
