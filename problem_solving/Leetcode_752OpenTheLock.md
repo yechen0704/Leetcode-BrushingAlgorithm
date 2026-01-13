@@ -92,3 +92,85 @@ example : 0000 -> 5555 deadend=[]
 Why not exponent ? use memo cutting edge, so same edge won't visit duplication
 **Space Complexity:**
 O(10^4)
+
+---
+### Bidirection BFS Optimization
+1. Start point and end point we both known
+2. state edge no weight graph
+3. state can be reverse or symmetrically
+
+Open the lock with bi-direction BFS
+1. set1 record current top frontier state
+2. set3 record current bottom frontier state
+3. choose one side to expand to neighbor
+4. check neighbors in other side frontier set or not
+```java
+class Solution {
+    public int openLock(String[] deadends, String target) {
+        HashSet<String> set = new HashSet<>();
+        for (String S : deadends) {
+            set.add(S);
+        }
+        String start = "0000";
+        if (set.contains(start) || set.contains(target)) return -1;
+        int step = 0;
+        HashSet<String> top = new HashSet<>();
+        HashSet<String> bottom = new HashSet<>();
+        top.add(start);
+        bottom.add(target);
+        set.add("0000");
+        set.add(target);
+        if (target.equals(start)) return 0;
+
+        while (!top.isEmpty() && !bottom.isEmpty()) {
+            HashSet<String> new_set = new HashSet<>();
+            step++;
+            for (String cur : top) {
+                for (String nextNei : getNeighbor(cur)) {
+                    if (bottom.contains(nextNei)) return step; // check bottom first, means hit
+                    if (set.contains(nextNei)) {
+                        continue;
+                    }
+                    new_set.add(nextNei);
+                    set.add(nextNei);
+                }
+            }
+            // cutting edge : expand less number layer
+            top = new_set;
+            if (top.size() > bottom.size()) {
+                HashSet<String> tmp = top;
+                top = bottom;
+                bottom = tmp;
+            }
+        }
+        return -1;
+    }
+
+    private String[] getNeighbor(String cur) {
+        String[] neis = new String[8];
+        for (int i = 0; i < 4; i++) {
+            String up = getUp(cur.toCharArray(), i);
+            String down = getDown(cur.toCharArray(), i);
+            neis[i] = up;
+            neis[i + 4] = down;
+        }
+        return neis;
+    }
+    private String getUp(char[] state, int p) {
+        if (state[p] - '0' == 9){
+            state[p] = '0';
+            return new String(state);
+        }
+        state[p] = (char)(state[p] + 1);
+        return new String(state);
+    }
+    private String getDown(char[] state, int p) {
+        if (state[p] - '0' == 0){
+            state[p] = '9';
+            return new String(state);
+        }
+        state[p] = (char)(state[p] - 1);
+        return new String(state);
+    }
+}
+```
