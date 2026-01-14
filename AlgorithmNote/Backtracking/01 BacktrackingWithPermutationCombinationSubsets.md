@@ -294,5 +294,13 @@ if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) continue;
 
 ---
 ## subset/combination : no duplicate reuse
+```java
+            for (int i = startIndex; i < candidates.length; i++) {
+                tmp.add(candidates[i]);
+                helper(candidates, target, sum += candidates[i], i, tmp); // pass i, not i + 1
+                tmp.remove(tmp.size() - 1);
+                sum -= candidates[i];
+            }
+```
 ---
 ## combination : no duplicate reuse
